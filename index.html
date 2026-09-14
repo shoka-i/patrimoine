@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Banc d'essai des connecteurs</title>
+<style>
+:root{
+  --paper:#FBFBFD; --panel:#FFFFFF; --ink:#14181F; --muted:#5A6472;
+  --rule:#DDE2E8; --accent:#2B4C8C;
+  --pass:#1B7A4B; --warn:#9A6200; --fail:#B3261E; --idle:#8A94A3;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --sans:ui-sans-serif,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
+  font-size:16px;line-height:1.5;-webkit-text-size-adjust:100%;
+  padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
+}
+.wrap{max-width:46rem;margin:0 auto;padding:1.5rem 1rem 4rem}
+h1{font-size:1.5rem;line-height:1.2;margin:0 0 .4rem;letter-spacing:-.01em}
+.sub{color:var(--muted);font-size:.92rem;margin:0 0 1.5rem;max-width:34rem}
+h2{font-size:.95rem;font-weight:600;margin:2rem 0 .6rem;color:var(--muted)}
+.notice{
+  border-left:3px solid var(--accent);background:#F0F3F9;
+  padding:.7rem .85rem;font-size:.86rem;color:#2A3442;margin:0 0 1.5rem;
+}
+.notice p{margin:0 0 .4rem}
+.notice p:last-child{margin:0}
+fieldset{border:1px solid var(--rule);background:var(--panel);border-radius:6px;padding:.9rem;margin:0 0 1rem}
+legend{font-size:.8rem;color:var(--muted);padding:0 .35rem}
+label{display:block;font-size:.82rem;color:var(--muted);margin:.55rem 0 .2rem}
+label:first-of-type{margin-top:0}
+input{
+  width:100%;padding:.5rem .6rem;border:1px solid var(--rule);border-radius:4px;
+  font-family:var(--mono);font-size:.82rem;background:#fff;color:var(--ink);
+}
+input:focus,button:focus{outline:2px solid var(--accent);outline-offset:2px}
+.bar{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap;margin:0 0 1.2rem}
+button{
+  font:inherit;font-size:.9rem;font-weight:500;padding:.6rem 1rem;border-radius:5px;
+  border:1px solid var(--accent);background:var(--accent);color:#fff;cursor:pointer;
+}
+button.ghost{background:#fff;color:var(--accent)}
+button[disabled]{opacity:.45;cursor:default}
+.count{font-family:var(--mono);font-size:.82rem;color:var(--muted)}
+.probe{border-top:1px solid var(--rule);padding:.75rem 0}
+.probe:last-child{border-bottom:1px solid var(--rule)}
+.head{display:flex;gap:.65rem;align-items:baseline}
+.dot{
+  flex:none;width:.6rem;height:.6rem;border-radius:50%;background:var(--idle);
+  transform:translateY(-1px);
+}
+.dot.pass{background:var(--pass)} .dot.warn{background:var(--warn)}
+.dot.fail{background:var(--fail)}
+.dot.run{background:var(--accent);animation:pulse 1s infinite}
+@keyframes pulse{50%{opacity:.25}}
+@media (prefers-reduced-motion:reduce){.dot.run{animation:none;opacity:.5}}
+.title{font-weight:600;font-size:.95rem;flex:1}
+.ms{font-family:var(--mono);font-size:.78rem;color:var(--muted)}
+.url{font-family:var(--mono);font-size:.74rem;color:var(--muted);word-break:break-all;margin:.3rem 0 0 1.25rem}
+.why{font-size:.82rem;color:var(--muted);margin:.35rem 0 0 1.25rem}
+.out{
+  margin:.5rem 0 0 1.25rem;font-family:var(--mono);font-size:.74rem;
+  background:#F4F6F8;border-radius:4px;padding:.5rem .6rem;white-space:pre-wrap;
+  word-break:break-all;max-height:9rem;overflow:auto;
+}
+.verdict{font-weight:600}
+.verdict.pass{color:var(--pass)} .verdict.warn{color:var(--warn)}
+.verdict.fail{color:var(--fail)}
+footer{margin-top:2.5rem;font-size:.8rem;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>Banc d'essai des connecteurs</h1>
+<p class="sub">Onze appels réseau pour savoir lesquels fonctionnent réellement depuis ce téléphone, avant d'écrire l'application par-dessus.</p>
+
+<div class="notice">
+  <p>Cette page n'enregistre rien : pas de cookie, pas de stockage local. Les clés saisies restent en mémoire et disparaissent à la fermeture.</p>
+  <p>Les adresses préremplies sont des adresses publiques connues, pas les tiennes. Si tu les remplaces par les tiennes, l'explorateur interrogé verra ton adresse IP les consulter.</p>
+</div>
+
+<fieldset>
+  <legend>Paramètres</legend>
+  <label for="k-cg">Clé Demo CoinGecko (facultative)</label>
+  <input id="k-cg" placeholder="CG-...">
+  <label for="k-es">Clé Etherscan (facultative)</label>
+  <input id="k-es" placeholder="laisser vide teste quand même le CORS">
+  <label for="k-td">Clé Twelve Data (facultative)</label>
+  <input id="k-td" placeholder="laisser vide teste quand même le CORS">
+  <label for="a-btc">Adresse Bitcoin</label>
+  <input id="a-btc" value="1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa">
+  <label for="a-eth">Adresse Ethereum</label>
+  <input id="a-eth" value="0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045">
+  <label for="t-etf">Ticker ETF à tester</label>
+  <input id="t-etf" value="CW8">
+</fieldset>
+
+<div class="bar">
+  <button id="run">Lancer les 11 tests</button>
+  <button id="copy" class="ghost" disabled>Copier le rapport</button>
+  <span class="count" id="count">0 / 11</span>
+</div>
+
+<div id="list"></div>
+
+<footer>Chaque test attend 12 secondes au maximum. Un appel bloqué par la politique CORS est distingué d'une panne réseau par un second appel en mode opaque.</footer>
+
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const v = id => $(id).value.trim();
+
+const STETH = '0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84';
+
+function probes(){
+  const cg = v('k-cg'), es = v('k-es'), td = v('k-td');
+  const btc = encodeURIComponent(v('a-btc')), eth = encodeURIComponent(v('a-eth'));
+  const etf = encodeURIComponent(v('t-etf'));
+  return [
+  {g:'Cours crypto', t:'CoinGecko sans clé',
+   why:"Le palier public sans clé existe-t-il encore, et répond-il au navigateur ?",
+   u:'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,staked-ether&vs_currencies=eur'},
+
+  {g:'Cours crypto', t:'CoinGecko avec clé Demo',
+   why:"La clé gratuite lève-t-elle la limite du palier public ?",
+   skip: !cg && "aucune clé CoinGecko saisie",
+   u:'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,staked-ether&vs_currencies=eur&x_cg_demo_api_key='+encodeURIComponent(cg)},
+
+  {g:'Bitcoin on-chain', t:'mempool.space',
+   why:"Solde d'une adresse publique. Source principale envisagée.",
+   u:'https://mempool.space/api/address/'+btc},
+
+  {g:'Bitcoin on-chain', t:'blockstream.info',
+   why:"Même API, opérateur différent. Sert de repli si mempool.space tombe.",
+   u:'https://blockstream.info/api/address/'+btc},
+
+  {g:'Ethereum on-chain', t:'Etherscan — solde ETH',
+   why:"Sans clé, une réponse lisible prouve quand même que le CORS passe.",
+   u:'https://api.etherscan.io/v2/api?chainid=1&module=account&action=balance&tag=latest&address='+eth+'&apikey='+encodeURIComponent(es||'YourApiKeyToken')},
+
+  {g:'Ethereum on-chain', t:'Etherscan — solde stETH',
+   why:"Le point décisif : ce solde jeton par jeton est-il gratuit, ou réservé au palier payant ?",
+   u:'https://api.etherscan.io/v2/api?chainid=1&module=account&action=tokenbalance&tag=latest&contractaddress='+STETH+'&address='+eth+'&apikey='+encodeURIComponent(es||'YourApiKeyToken')},
+
+  {g:'Ethereum on-chain', t:'Blockscout — tous les jetons',
+   why:"Sans clé et sans limite quotidienne serrée. Remplace Etherscan si son palier gratuit se referme.",
+   u:'https://eth.blockscout.com/api/v2/addresses/'+eth+'/token-balances'},
+
+  {g:'Bourse', t:'Twelve Data — prix ETF',
+   why:"Le ticker Euronext est-il couvert par le plan gratuit ? C'est la plus grosse inconnue du projet.",
+   u:'https://api.twelvedata.com/price?symbol='+etf+'&apikey='+encodeURIComponent(td||'demo')},
+
+  {g:'Bourse', t:'Stooq — cotation CSV',
+   why:"Sans clé, mais l'en-tête CORS n'est documenté nulle part.",
+   u:'https://stooq.com/q/l/?s='+etf.toLowerCase()+'.fr&f=sd2t2ohlcv&h&e=csv'},
+
+  {g:'Bourse', t:'Yahoo Finance (témoin)',
+   why:"Attendu en échec. Le tester coûte une seconde et ferme le débat.",
+   u:'https://query1.finance.yahoo.com/v8/finance/chart/'+etf+'.PA'},
+
+  {g:'Change', t:'Frankfurter — taux BCE',
+   why:"Conversion vers l'euro des lignes libellées en dollars.",
+   u:'https://api.frankfurter.dev/v1/latest?base=USD&symbols=EUR'}
+  ];
+}
+
+let results = [];
+
+function render(list){
+  const el = $('list'); el.innerHTML = '';
+  let group = null;
+  list.forEach((p,i)=>{
+    if(p.g !== group){ group = p.g;
+      const h = document.createElement('h2'); h.textContent = group; el.appendChild(h); }
+    const d = document.createElement('div'); d.className='probe'; d.id='p'+i;
+    d.innerHTML =
+      '<div class="head"><span class="dot" id="d'+i+'"></span>'+
+      '<span class="title">'+p.t+'</span><span class="ms" id="m'+i+'"></span></div>'+
+      '<div class="why">'+p.why+'</div>'+
+      '<div class="url">'+p.u.replace(/apikey=[^&]*/,'apikey=***').replace(/x_cg_demo_api_key=[^&]*/,'x_cg_demo_api_key=***')+'</div>'+
+      '<div class="out" id="o'+i+'" hidden></div>';
+    el.appendChild(d);
+  });
+}
+
+async function fetchTimed(url, mode){
+  const ac = new AbortController();
+  const timer = setTimeout(()=>ac.abort(), 12000);
+  try{ return await fetch(url, {mode: mode||'cors', cache:'no-store', signal: ac.signal}); }
+  finally{ clearTimeout(timer); }
+}
+
+async function runOne(p, i){
+  const dot = $('d'+i), ms = $('m'+i), out = $('o'+i);
+  if(p.skip){
+    dot.className='dot'; ms.textContent='ignoré';
+    out.hidden=false; out.textContent = p.skip;
+    return {t:p.t, verdict:'ignoré', detail:p.skip};
+  }
+  dot.className='dot run'; ms.textContent='…';
+  const t0 = performance.now();
+  let r;
+  try{
+    const res = await fetchTimed(p.u);
+    const body = (await res.text()).slice(0,400);
+    const ok = res.ok;
+    r = {verdict: ok ? 'lisible' : 'CORS ok, HTTP '+res.status,
+         cls: ok ? 'pass' : 'warn',
+         detail: 'HTTP '+res.status+'\n'+body};
+  }catch(e){
+    let blocked = false;
+    try{ await fetchTimed(p.u,'no-cors'); blocked = true; }catch(_){}
+    r = blocked
+      ? {verdict:'bloqué par CORS', cls:'fail',
+         detail:"Le serveur répond, mais sans en-tête Access-Control-Allow-Origin : le navigateur jette la réponse. Inutilisable tel quel."}
+      : {verdict:'injoignable', cls:'fail',
+         detail:'Panne réseau, blocage DNS ou délai dépassé. '+(e && e.message || '')};
+  }
+  const dur = Math.round(performance.now()-t0);
+  dot.className='dot '+r.cls; ms.textContent=dur+' ms';
+  out.hidden=false;
+  out.innerHTML='<span class="verdict '+r.cls+'">'+r.verdict+'</span>\n'+
+    r.detail.replace(/</g,'&lt;');
+  return {t:p.t, verdict:r.verdict, ms:dur, detail:r.detail};
+}
+
+$('run').onclick = async () => {
+  const list = probes();
+  render(list); results = [];
+  $('run').disabled = true; $('copy').disabled = true;
+  for(let i=0;i<list.length;i++){
+    results.push(await runOne(list[i], i));
+    $('count').textContent = (i+1)+' / '+list.length;
+    await new Promise(r=>setTimeout(r,400));
+  }
+  $('run').disabled = false; $('copy').disabled = false;
+};
+
+$('copy').onclick = async () => {
+  const md = '# Banc d\'essai des connecteurs — '+new Date().toLocaleString('fr-FR')+'\n\n'+
+    '| Test | Verdict | Durée | Réponse |\n|---|---|---|---|\n'+
+    results.map(r=>'| '+r.t+' | '+r.verdict+' | '+(r.ms?r.ms+' ms':'—')+' | '+
+      String(r.detail).replace(/\s+/g,' ').slice(0,180)+' |').join('\n');
+  try{ await navigator.clipboard.writeText(md); $('copy').textContent='Rapport copié'; }
+  catch(_){
+    const ta=document.createElement('textarea'); ta.value=md;
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove();
+    $('copy').textContent='Rapport copié';
+  }
+  setTimeout(()=>{$('copy').textContent='Copier le rapport';},2500);
+};
+
+render(probes());
+</script>
+</body>
+</html>
