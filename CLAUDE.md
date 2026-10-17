@@ -66,7 +66,7 @@ pages exhaustives.
 | | | Statut |
 |---|---|---|
 | M0 | Banc d'essai des connecteurs | fait |
-| M1 | Modèle de données et saisie (actif et passif) + PWA installable | en cours |
+| M1 | Modèle de données et saisie (actif et passif) + PWA installable | fait |
 | M2 | Vue patrimoine : répartition, évolution, capital versé vs performance | |
 | M3 | Stratégie et moteur de règles | |
 | M4 | Connecteurs de données | |
