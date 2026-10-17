@@ -45,7 +45,7 @@ export async function vueComptesListe() {
   return { html };
 }
 
-function labelEnveloppe(code) {
+export function labelEnveloppe(code) {
   return (ENVELOPPES.find((e) => e[0] === code) || [code, code])[1];
 }
 

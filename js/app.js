@@ -3,10 +3,12 @@ import { vueAccueil } from './views/accueil.js';
 import { vueComptesListe, vueCompteForm, vueCompteDetail } from './views/comptes.js';
 import { vuePositionForm, vuePositionDetail } from './views/positions.js';
 import { vueDettesListe, vueDetteForm, vueDetteDetail } from './views/dettes.js';
+import { vuePatrimoine } from './views/patrimoine.js';
 import { vueReglages } from './views/export.js';
 
 const ROUTES = [
   { re: /^#\/$/, view: vueAccueil, titre: 'Patrimoine' },
+  { re: /^#\/patrimoine$/, view: vuePatrimoine, titre: 'Patrimoine' },
   { re: /^#\/comptes$/, view: vueComptesListe, titre: 'Comptes' },
   { re: /^#\/comptes\/nouveau$/, view: () => vueCompteForm(null), titre: 'Nouveau compte' },
   { re: /^#\/comptes\/([^/]+)\/modifier$/, view: (id) => vueCompteForm(id), titre: 'Modifier le compte' },

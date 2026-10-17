@@ -7,6 +7,21 @@ export function formatMontant(valeur, devise = 'EUR') {
   }
 }
 
+export function formatMontantCompact(valeur) {
+  if (valeur === null || valeur === undefined || Number.isNaN(valeur)) return '—';
+  return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', notation: 'compact', maximumFractionDigits: 1 }).format(valeur);
+}
+
+export function formatPct(ratio, decimales = 1) {
+  if (ratio === null || ratio === undefined || Number.isNaN(ratio)) return '—';
+  return new Intl.NumberFormat('fr-FR', { style: 'percent', maximumFractionDigits: decimales }).format(ratio);
+}
+
+export function formatSigne(valeur, devise = 'EUR') {
+  if (valeur === null || valeur === undefined || Number.isNaN(valeur)) return '—';
+  return (valeur > 0 ? '+' : '') + formatMontant(valeur, devise);
+}
+
 export function formatNombre(valeur, decimales = 2) {
   if (valeur === null || valeur === undefined || Number.isNaN(valeur)) return '—';
   return new Intl.NumberFormat('fr-FR', { maximumFractionDigits: decimales }).format(valeur);

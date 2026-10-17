@@ -27,7 +27,7 @@ function labelType(code) {
 function fluxExterneDeType(code) {
   return (TYPES_OP.find((t) => t[0] === code) || [null, null, false])[2];
 }
-function labelClasse(code) {
+export function labelClasse(code) {
   return (CLASSES.find((c) => c[0] === code) || [code, code])[1];
 }
 

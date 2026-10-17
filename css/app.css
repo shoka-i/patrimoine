@@ -134,3 +134,34 @@ table.tbl td.num{font-family:var(--mono);text-align:right}
   background:var(--ink);color:#fff;padding:.55rem .9rem;border-radius:20px;font-size:.84rem;
   z-index:20;box-shadow:0 4px 14px rgba(0,0,0,.2);
 }
+
+/* M2 — vue patrimoine */
+.seg{display:flex;gap:.3rem;margin:0 0 .8rem;flex-wrap:wrap}
+.seg button{background:#fff;color:var(--accent);padding:.35rem .7rem;font-size:.8rem}
+.seg button.on{background:var(--accent);color:var(--accent-ink)}
+
+.rep-row{margin:0 0 .75rem}
+.rep-top{display:flex;justify-content:space-between;gap:.6rem;align-items:baseline;font-size:.88rem}
+.rep-lbl{font-weight:600;min-width:0}
+.rep-val{font-family:var(--mono);font-size:.82rem;white-space:nowrap;color:var(--ink)}
+.rep-track{height:8px;background:#EEF1F5;border-radius:4px;margin-top:.25rem;overflow:hidden}
+.rep-bar{height:100%;background:var(--viz-valeur);border-radius:0 4px 4px 0}
+
+:root{--viz-valeur:#2a78d6;--viz-capital:#5A6472}
+.viz{width:100%;height:auto;display:block;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.viz-grid{stroke:#E1E0D9;stroke-width:1}
+.viz-axis{fill:#6b6a66;font-size:10px;font-family:var(--sans)}
+.viz-line{fill:none;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.viz-line.valeur{stroke:var(--viz-valeur)}
+.viz-line.capital{stroke:var(--viz-capital);stroke-dasharray:5 4}
+.viz-dot{stroke:var(--panel);stroke-width:2}
+.viz-dot.valeur{fill:var(--viz-valeur)}
+.viz-dot.capital{fill:var(--viz-capital)}
+.viz-cursor{stroke:var(--idle);stroke-width:1}
+.viz-legend{display:flex;gap:1rem;font-size:.8rem;color:var(--muted);margin:0 0 .3rem}
+.viz-legend .sw{display:inline-block;width:18px;height:0;border-top:2px solid;margin-right:.35rem;vertical-align:middle}
+.viz-legend .sw-valeur{border-color:var(--viz-valeur)}
+.viz-legend .sw-capital{border-color:var(--viz-capital);border-top-style:dashed}
+.viz-lecture{font-size:.82rem;min-height:2.6em;margin:0 0 .2rem}
+.viz-table{margin:.5rem 0}
+.viz-table summary{font-size:.82rem;color:var(--accent);cursor:pointer;margin-bottom:.4rem}

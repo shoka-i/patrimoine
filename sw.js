@@ -1,4 +1,4 @@
-const CACHE = 'patrimoine-v1';
+const CACHE = 'patrimoine-v2';
 const PRECACHE = [
   './',
   'index.html',
@@ -9,7 +9,9 @@ const PRECACHE = [
   'js/format.js',
   'js/amortization.js',
   'js/calc.js',
+  'js/patrimoine.js',
   'js/views/accueil.js',
+  'js/views/patrimoine.js',
   'js/views/comptes.js',
   'js/views/positions.js',
   'js/views/dettes.js',

@@ -76,3 +76,18 @@ Deux invariants portent tout le reste :
 2. **Le champ `flux_externe`** sur chaque opération sépare versements et plus-values.
    Capital net versé = somme des flux externes. Plus-value = valorisation courante
    moins capital net versé. Sans ce champ, aucune analyse de performance n'est possible.
+
+## Conventions M2 (17/10/2026)
+
+- **Taux de change** : collection `changes`, une entrée par devise, `id` = code devise,
+  `taux` = valeur d'une unité en EUR, `date`, `source` (`saisie` aujourd'hui, nom de l'API
+  avec M4). Une ligne dont la devise n'a pas de taux est exclue des totaux et signalée,
+  jamais convertie « au jugé ». Le taux courant s'applique à tout l'historique.
+- **Dettes supposées en euros** (aucune devise n'est portée par le modèle de dette).
+- **Immobilier** compté dans le brut et dans les répartitions, étiqueté « hors marché ».
+  Son exclusion de la base d'allocation relève de M3.
+- **Contrats en valorisation globale** : classe d'actifs non ventilée, affichée comme telle.
+- **Évolution** : une date par valorisation ou flux externe. Valeur d'une ligne à une date =
+  dernière valorisation connue (0 avant la première). Pas de reconstitution entre deux saisies.
+- **Performance** : plus-value = valeur − capital net versé ; le pourcentage est rapporté au
+  capital net versé, ni annualisé ni pondéré par le temps.
